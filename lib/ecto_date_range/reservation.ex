@@ -3,6 +3,6 @@ defmodule EctoDateRange.Reservation do
 
   schema "reservations" do
     field :room_name, :string
-    field :during, :tsrange
+    field :during, EctoDateRange.DateRange
   end
 end
