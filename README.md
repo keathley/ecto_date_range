@@ -1,6 +1,6 @@
 # EctoDateRange
 
-This is just a test to get postgres date ranges (and constraints on those ranges) to play nicely in Ecto.
+This is an experiment to get postgres date ranges (and constraints on those ranges) to play nicely with Ecto.
 
 It requires:
 
