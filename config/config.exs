@@ -8,3 +8,5 @@ config :ecto_date_range, EctoDateRange.Repo,
   username: "postgres",
   password: "postgres",
   hostname: "localhost"
+
+import_config "#{Mix.env}.exs"

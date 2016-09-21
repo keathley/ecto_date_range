@@ -7,6 +7,7 @@ defmodule EctoDateRange.Mixfile do
      elixir: "~> 1.2",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     aliases: aliases,
      deps: deps]
   end
 
@@ -18,5 +19,11 @@ defmodule EctoDateRange.Mixfile do
   defp deps do
     [{:ecto, "~> 2.0"},
       {:postgrex, "~> 0.11"}]
+  end
+
+  defp aliases do
+    ["ecto.setup": ["ecto.create", "ecto.migrate"],
+    "test": ["ecto.create --quiet", "ecto.migrate", "test"],
+     "ecto.reset": ["ecto.drop", "ecto.setup"]]
   end
 end

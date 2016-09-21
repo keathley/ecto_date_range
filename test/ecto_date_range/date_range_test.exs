@@ -1,10 +1,30 @@
 defmodule EctoDateRange.DateRangeTest do
   use ExUnit.Case, async: true
 
-  alias EctoDateRange.DateRange
+  alias EctoDateRange.{DateRange, Reservation, Repo}
+
+  setup do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(EctoDateRange.Repo)
+  end
 
   test "type/0" do
     assert DateRange.type == :tsrange
+  end
+
+  test "works with changesets" do
+    {:ok, result} =
+      %Reservation{}
+      |> Reservation.changeset(%{room_name: "abc", during: %{start_date: "2016-01-03 00:00:00", end_date: "2016-01-04 00:00:00"}})
+      |> Repo.insert
+
+    assert result
+
+    {:error, changeset} =
+      %Reservation{}
+      |> Reservation.changeset(%{room_name: "abc", during: %{start_date: "2016-01-03 12:00:00", end_date: "2016-01-05 00:00:00"}})
+      |> Repo.insert
+
+    refute changeset.valid?
   end
 
   describe "cast/1" do

@@ -33,10 +33,9 @@ defmodule EctoDateRange.DateRange do
 
   @spec dump(DateRange.t) :: db_type
   def dump(%{start_date: start_date, end_date: end_date}) do
-    IO.puts "Dumping"
-    IO.inspect(start_date)
-    IO.inspect(end_date)
-    {:ok, %Postgrex.Range{lower: start_date, upper: end_date}}
+    with  {:ok, decoded_start_date} <- Ecto.DateTime.dump(start_date),
+          {:ok, decoded_end_date}   <- Ecto.DateTime.dump(end_date),
+      do: {:ok, %Postgrex.Range{lower: decoded_start_date, upper: decoded_end_date}}
   end
 
   def dump(_), do: :error
